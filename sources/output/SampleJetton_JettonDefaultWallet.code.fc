@@ -119,13 +119,6 @@
 ;; Get methods of a Contract JettonDefaultWallet
 ;;
 
-_ %msg_value(int $$value) method_id(72550) {
-    int $value = $$value;
-    var self = $JettonDefaultWallet$_contract_load();
-    var res = self~$JettonDefaultWallet$_fun_msg_value($value);
-    return res;
-}
-
 _ %get_wallet_data() method_id(97026) {
     var self = $JettonDefaultWallet$_contract_load();
     var res = self~$JettonDefaultWallet$_fun_get_wallet_data();
@@ -143,7 +136,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmadWUeijFYD81gyUTzk1jtiKnSUQFUeWq4dktF8piLnAk";
+    return "ipfs://QmZCM7EUmWp4uNNomzWptz14qXRSXyCWLgT2WFCEsCn9Gb";
 }
 
 _ lazy_deployment_completed() method_id {

@@ -60,7 +60,6 @@ PROGRAM{
   DECLPROC $JettonDefaultWallet$_internal_binary_ProvideWalletAddress
   DECLPROC $JettonDefaultWallet$_receive_binary_bounce_TokenTransferInternal
   DECLPROC $JettonDefaultWallet$_receive_binary_bounce_TokenBurnNotification
-  72550 DECLMETHOD %msg_value
   97026 DECLMETHOD %get_wallet_data
   113617 DECLMETHOD supported_interfaces
   121275 DECLMETHOD get_abi_ipfs
@@ -841,12 +840,6 @@ PROGRAM{
     ADD
     s0 s2 XCHG
   }>
-  %msg_value PROC:<{
-    $JettonDefaultWallet$_contract_load INLINECALLDICT
-    3 ROLL
-    $JettonDefaultWallet$_fun_msg_value INLINECALLDICT
-    3 1 BLKDROP2
-  }>
   %get_wallet_data PROC:<{
     $JettonDefaultWallet$_contract_load INLINECALLDICT
     $JettonDefaultWallet$_fun_get_wallet_data INLINECALLDICT
@@ -861,7 +854,7 @@ PROGRAM{
     209778528950190195973528115415557644819 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d6164575565696a4659443831677955547a6b316a74694b6e535551465565577134646b74463870694c6e416b} PUSHSLICE
+    x{697066733a2f2f516d5a434d3745556d577034754e4e6f6d7a5770747a313471585253587943574c6754325746434573436e394762} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: JettonDefaultWallet
-BOC Size: 2311 bytes
+BOC Size: 2291 bytes
 
 # Types
-Total Types: 17
+Total Types: 16
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -69,15 +69,8 @@ Signature: `ProvideWalletAddress{query_id:uint64,owner_address:address,include_a
 TLB: `take_wallet_address#d1735400 query_id:uint64 wallet_address:address owner_address:Maybe address = TakeWalletAddress`
 Signature: `TakeWalletAddress{query_id:uint64,wallet_address:address,owner_address:Maybe address}`
 
-## Mint
-TLB: `mint#fc708bd2 amount:int257 receiver:address = Mint`
-Signature: `Mint{amount:int257,receiver:address}`
-
 # Get Methods
-Total Get Methods: 2
-
-## msg_value
-Argument: value
+Total Get Methods: 1
 
 ## get_wallet_data
 
@@ -109,7 +102,6 @@ Argument: value
 3688: Not mintable
 4159: Invalid value!!
 4429: Invalid sender
-12241: Max supply exceeded
 14534: Not owner
 18668: Can't Mint Anymore
 23951: Insufficient gas

@@ -2,10 +2,16 @@ import { beginCell, contractAddress, toNano, TonClient4, WalletContractV4, inter
 import { mnemonicToPrivateKey } from "ton-crypto";
 import { buildOnchainMetadata } from "./utils/jetton-helpers";
 
-import { SampleJetton, storeMint } from "./output/SampleJetton_SampleJetton";
+import { SampleJetton } from "./output/SampleJetton_SampleJetton";
 import { printSeparator } from "./utils/print";
 import * as dotenv from "dotenv";
 dotenv.config();
+
+let op_code = "deploy";
+let tick_name = "nano";
+let max_supply = "2100000000000000000";
+let limit = "10000000000";
+const string_first = `data:application/json,{"p":"ton-20","op":"${op_code}","tick":"${tick_name}","max":"${max_supply}","lim":"${limit}"}`; // Change to the content URL you prepared
 
 (async () => {
     //create client for testnet sandboxv4 API - alternative endpoint
@@ -18,38 +24,20 @@ dotenv.config();
     let secretKey = keyPair.secretKey;
     let workchain = 0; //we are working in basechain.
     let deployer_wallet = WalletContractV4.create({ workchain, publicKey: keyPair.publicKey });
-    console.log(deployer_wallet.address);
-
     let deployer_wallet_contract = client4.open(deployer_wallet);
 
     const jettonParams = {
-        name: "Test Token Name",
+        name: "Test Token EEEEEEEEEE",
         description: "This is description of Test Jetton Token in Tact-lang",
-        symbol: "TTN",
+        symbol: "EEEEEN",
         image: "https://avatars.githubusercontent.com/u/104382459?s=200&v=4",
     };
 
     // Create content Cell
     let content = buildOnchainMetadata(jettonParams);
-    let max_supply = toNano(123456766689011); // 🔴 Set the specific total supply in nano
-
-    // Compute init data for deployment
-    // NOTICE: the parameters inside the init functions were the input for the contract address
-    // which means any changes will change the smart contract address as well
-    let init = await SampleJetton.init(deployer_wallet_contract.address, content, max_supply);
+    let init = await SampleJetton.init(deployer_wallet_contract.address, content);
     let jettonMaster = contractAddress(workchain, init);
-    let deployAmount = toNano("0.15");
-
-    let supply = toNano(1000000000); // 🔴 Specify total supply in nano
-    let packed_msg = beginCell()
-        .store(
-            storeMint({
-                $$type: "Mint",
-                amount: supply,
-                receiver: deployer_wallet_contract.address,
-            })
-        )
-        .endCell();
+    let deployAmount = toNano("0.1");
 
     // send a message on new address contract to deploy it
     let seqno: number = await deployer_wallet_contract.getSeqno();
@@ -61,7 +49,6 @@ dotenv.config();
     let balance: bigint = await deployer_wallet_contract.getBalance();
 
     console.log("Current deployment wallet balance = ", fromNano(balance).toString(), "💎TON");
-    console.log("Minting:: ", fromNano(supply));
     printSeparator();
 
     await deployer_wallet_contract.sendTransfer({
@@ -75,7 +62,7 @@ dotenv.config();
                     code: init.code,
                     data: init.data,
                 },
-                body: packed_msg,
+                body: string_first,
             }),
         ],
     });
